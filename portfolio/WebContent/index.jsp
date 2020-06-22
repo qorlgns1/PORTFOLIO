@@ -8,11 +8,11 @@
 <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+	<h2>스마트 오더에 오신걸 환영합니다.</h2>
 	<ul>
-		<li><a href="user/register.html">회원가입</a></li>
-		<li><a href="user/login.html">로그인</a></li>
-		<li><a href="todo/list.html">목록확인</a></li>
-		<li><a href="todo/write.html">목록만들기</a></li>
+		<li><a href="user/login.jsp">회원 로그인</a></li>
+		<li><a href="#">비회원 로그인</a></li>
+		<li><a href="user/register.jsp">회원가입</a></li>
 	</ul>
 </body>
 </html>
