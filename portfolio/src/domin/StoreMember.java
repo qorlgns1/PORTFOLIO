@@ -2,7 +2,7 @@ package domin;
 
 import java.util.Date;
 
-public class memberinfo {
+public class StoreMember {
 	private String membernickname;
 	private String memberemail;
 	private String memberpassword;
@@ -12,14 +12,14 @@ public class memberinfo {
 	private String memberisremove;
 	
 	//매개변수가 없는 생성자
-	public memberinfo() {
+	public StoreMember() {
 		super();
 	}
 	
 	//매개변수가 있는 생성자
 	//이미 데이터가 존재하는 경우 set을 호출하지 않고 
 	//한번에 초기화 할 목적으로 생성
-	public memberinfo(String membernickname, String memberemail, String memberpassword, String memberphonenumber,
+	public StoreMember(String membernickname, String memberemail, String memberpassword, String memberphonenumber,
 			String memberislogin, Date memberlastlogindate, String memberisremove) {
 		super();
 		this.membernickname = membernickname;
