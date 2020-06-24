@@ -11,7 +11,7 @@ import domin.StoreMember;
 
 
 
-public class MemberInfoDao {
+public class StoreMemberDao{
 	//데이터베이스 연동에 필요한 변수
 		private Connection con;
 		private PreparedStatement pstmt;
@@ -19,7 +19,7 @@ public class MemberInfoDao {
 		
 		// 생성자 - 데이터베이스 드라이버 클래스 로드
 		// 한번만 수행하면 되기 때문에 생성자에 작성
-		private MemberInfoDao() {
+		private StoreMemberDao() {
 			try {
 				// mysql 드라이버 로드
 				Class.forName("com.mysql.jdbc.Driver");
@@ -29,12 +29,12 @@ public class MemberInfoDao {
 				}
 			}
 
-		private static MemberInfoDao memberInfoDao;
-		public static MemberInfoDao sharedInstance() {
-			if(memberInfoDao==null) {
-				memberInfoDao = new MemberInfoDao();
+		private static StoreMemberDao storeMemberDao;
+		public static StoreMemberDao sharedInstance() {
+			if(storeMemberDao==null) {
+				storeMemberDao = new StoreMemberDao();
 			}
-			return memberInfoDao;
+			return storeMemberDao;
 		}
 		
 		//연결 메소드와 해제 메소드

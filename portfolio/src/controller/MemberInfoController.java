@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MemberInfoService;
-import service.MemberInfoServiceImpl;
+import service.StoreMemberService;
+import service.StoreMemberServiceImpl;
 
 //${pageContext.request.contextPath}
 @WebServlet({ "/memberinfo/*" })
@@ -18,11 +18,11 @@ public class MemberInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	//서비스 인스턴스 참조 변수
-	private MemberInfoService memberInfoService;
+	private StoreMemberService memberInfoService;
 		
 	  public MemberInfoController() {
 	        super();
-	        memberInfoService = MemberInfoServiceImpl.sharedInstance();
+	        memberInfoService = StoreMemberServiceImpl.sharedInstance();
 	    }
   
 
