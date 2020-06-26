@@ -128,7 +128,7 @@ registerform.addEventListener("submit",function(event) {
 					if(data.result == true){
 						//메인으로 이동
 						alert("회원가입이 성공하였습니다.");
-						location.href = "./login.jsp";
+						location.href = "../login.jsp";
 						
 					}else{
 						alert("웹사이트에 오류가 있습니다. 빠른 시일내에 복구하겠습니다.");

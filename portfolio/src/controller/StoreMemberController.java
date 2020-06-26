@@ -41,10 +41,8 @@ public class StoreMemberController extends HttpServlet {
 		System.out.println("controller.method:" + method);
 		
 		if(command.equals("/user/main")) {
-			System.out.println("요청시작");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/main.jsp");
 			dispatcher.forward(request, response);
-			System.out.println("요청끝");
 		}
 		else if(command.equals("/user/login")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/member/login.jsp");
