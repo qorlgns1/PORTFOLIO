@@ -11,22 +11,22 @@ import domin.StoreMember;
 
 
 
-public class StoreMemberDao{
+public class StoreMemberDao extends AbstractDao{
 	//데이터베이스 연동에 필요한 변수
-		private Connection con;
-		private PreparedStatement pstmt;
-		private ResultSet rs;
+//		private Connection con;
+//		private PreparedStatement pstmt;
+//		private ResultSet rs;
 		
 		// 생성자 - 데이터베이스 드라이버 클래스 로드
 		// 한번만 수행하면 되기 때문에 생성자에 작성
 		private StoreMemberDao() {
-			try {
-				// mysql 드라이버 로드
-				Class.forName("com.mysql.jdbc.Driver");
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-					e.printStackTrace();
-				}
+//			try {
+//				// mysql 드라이버 로드
+//				Class.forName("com.mysql.jdbc.Driver");
+//				} catch (Exception e) {
+//					System.out.println(e.getMessage());
+//					e.printStackTrace();
+//				}
 			}
 
 		private static StoreMemberDao storeMemberDao;
@@ -36,41 +36,7 @@ public class StoreMemberDao{
 			}
 			return storeMemberDao;
 		}
-		
-		//연결 메소드와 해제 메소드
-		//연결과 해제는 모든 곳에서 사용이 되는 부분이므로 중복해서
-		//코딩하지 않으려고 별도의 메소드로 생성
-		//이 메소드는 코드의 중복을 회피할려고 만든 메소드이므로
-		//private 으로 생성해서 외부에서 호출하지 못하도록 생성
-		private void connect() {
-			try {
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample?useUnicode=true&chracterEncoding=utf8","root","12345678");
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			
-		}
-		
-		private void close() {
-			try {
-				if( rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(con != null) {
-					con.close();
-				}
 				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			
-		}
-		
 		//전체 데이터를 조회하는 메소드
 		public List<StoreMember> list() {
 			//List를 리턴할 때는 null이 리턴될 수 없도록 만들어야 합니다.
@@ -114,7 +80,7 @@ public class StoreMemberDao{
 			return list;
 		}
 		
-		public int insert(StoreMember memberInfo) {
+		public int insert(StoreMember storeMember) {
 			//-1로 초기화해서 -1이 리턴되면 작업 실패
 			int result = -1;
 			connect();
@@ -122,16 +88,17 @@ public class StoreMemberDao{
 				//SQL을 생성
 				pstmt = con.prepareStatement("insert into storemembertbl(membernickname, memberemail, memberpassword, memberphonenumber) values(?,?,?,?)");
 				//?에 값을 바인딩
-				pstmt.setString(1, memberInfo.getMembernickname());
-				pstmt.setString(2, memberInfo.getMemberemail());
-				pstmt.setString(3, memberInfo.getMemberpassword());
-				pstmt.setString(4, memberInfo.getMemberphonenumber());
+				pstmt.setString(1, storeMember.getMembernickname());
+				pstmt.setString(2, storeMember.getMemberemail());
+				pstmt.setString(3, storeMember.getMemberpassword());
+				pstmt.setString(4, storeMember.getMemberphonenumber());
 				
 				//SQL을 실행
 				result = pstmt.executeUpdate();
 				
 				
 			}catch(Exception e) {
+				System.out.println("StoreMemberDao.insert 오류");
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 				
@@ -141,7 +108,64 @@ public class StoreMemberDao{
 			
 		}
 		
+		public boolean emailCheck(String memberemail) {
+			System.out.println("userDAO.email: " + memberemail);
+			boolean result = false;
+			connect();
+			try {
+				pstmt = con.prepareStatement("select memberemail from storemembertbl where upper(memberemail)=?");
+				//데이터 바인딩
+				pstmt.setString(1, memberemail.toUpperCase());
+				//SQL 실행
+				rs= pstmt.executeQuery();
+				//여기 부분은 본인이 결정
+				//데이터가 만약 있다면 false를 리턴하기로 내가 정하고
+				//데이터가 만약 없다면 true를 리턴하기로 정해보자.
+				if(rs.next()) {
+					result = false;
+				}else {
+					result = true;
+				}
+			}catch(Exception e) {
+				System.out.println("DAO클래스 email 중복 검사 실패");
+				System.out.println("DAO : " + e.getMessage());
+				e.printStackTrace();
+			}
+			
+			close();
+			System.out.println("UserDAO 리턴값: " + result);
+			return result;
+				
+		}
 		
+		//nickname 중복 검사를 위한 메소드
+			public boolean nicknameCheck(String membernickname) {
+				boolean result = false;
+				connect();
+				try {
+					pstmt = con.prepareStatement("select membernickname from storemembertbl where upper(membernickname)=?");
+					//데이터 바인딩
+					pstmt.setString(1, membernickname.toUpperCase());
+					//SQL 실행
+					rs= pstmt.executeQuery();
+					//여기 부분은 본인이 결정
+					//데이터가 만약 있다면 false를 리턴하기로 내가 정하고
+					//데이터가 만약 없다면 true를 리턴하기로 정해보자.
+					if(rs.next()) {
+						result = false;
+					}else {
+						result = true;
+					}
+				}catch(Exception e) {
+					System.out.println("DAO클래스 nickname 중복 검사 실패");
+					System.out.println("DAO : " + e.getMessage());
+					e.printStackTrace();
+				}
+				
+				close();
+				return result;
+						
+			}
 		
 		
 		

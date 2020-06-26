@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="css/register.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/member/css/register.css">
 </head>
 <body>
 	<h1>회원가입</h1>
@@ -52,5 +52,6 @@
 		</div>
 	</div>
 </body>
-<script src="js/register.js"></script>
+
+<script src="${pageContext.request.contextPath}/member/js/register.js"></script>
 </html>

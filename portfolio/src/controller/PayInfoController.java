@@ -1,45 +1,40 @@
 package controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.StoreMemberService;
-import service.StoreMemberServiceImpl;
+import service.PayInfoService;
+import service.PayInfoServiceImpl;
 
-//${pageContext.request.contextPath}
-@WebServlet({ "/memberinfo/*" })
-public class MemberInfoController extends HttpServlet {
+
+@WebServlet("/payinfo")
+public class PayInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       private PayInfoService payInfoService;
+    
+    public PayInfoController() {
+        super();
+        payInfoService = PayInfoServiceImpl.sharedInstance();
+    }
 
-	//서비스 인스턴스 참조 변수
-	private StoreMemberService memberInfoService;
-		
-	  public MemberInfoController() {
-	        super();
-	        memberInfoService = StoreMemberServiceImpl.sharedInstance();
-	    }
-  
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//공통된 부분을 제거한 주소를 만듭니다.
 		String contextPath = request.getContextPath();
+		//System.out.println("controller.contextPath:" +contextPath);
 		String requestURI = request.getRequestURI();
+		//System.out.println("controller.requestURI:" + requestURI);
+		//요청을 맞게 작성했는지 확인
+		//완성되면 주석 처리
 		String command = requestURI.substring(contextPath.length());
-		//전송 방식을 저장
+		//System.out.println("controller.command:" + command);
 		String method = request.getMethod();
+		//System.out.println("controller.method:" + method);
 		
-		if(command.equals("/")) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-			dispatcher.forward(request, response);
-			
-		}
 	}
 
 	

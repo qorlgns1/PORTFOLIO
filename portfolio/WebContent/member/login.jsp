@@ -7,7 +7,7 @@
 <title>로그인</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/member/css/login.css">
 </head>
 <body>
 	<h1>My Web</h1>
